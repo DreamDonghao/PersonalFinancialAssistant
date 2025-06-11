@@ -36,28 +36,58 @@ namespace pfa {
         ~User() {
             std::ofstream file("../data/user/user1");
             file << m_revenue << " " << m_expenditure << "\n";
-            for (size_t i = 0; i < m_recordList.getRecords().size()-1; ++i) {
+            for (size_t i = 0; i < m_recordList.getRecords().size() - 1; ++i) {
                 file << m_recordList.getRecords()[i].toFileDataString() << "\n";
             }
-            file<<m_recordList.getRecords().back().toFileDataString();
+            file << m_recordList.getRecords().back().toFileDataString();
             file.close();
         }
 
         void addRecord(const Time &transactionTime, const double amount, std::string purpose, std::string remarks) {
             m_recordList.addRecord(transactionTime, amount, std::move(purpose), std::move(remarks),
                                    Time::getNowtime());
-            if (amount>0) {
-                m_revenue+=amount;
-            }else {
-                m_expenditure-=amount;
+            if (amount > 0) {
+                m_revenue += amount;
+            } else {
+                m_expenditure -= amount;
             }
         }
 
         void removeRecord(const size_t id) {
-            m_recordList.removeRecord(id);
+            //
+            if (const Record removedRecord = m_recordList.removeRecord(id); removedRecord.getAmount()>0) {
+                m_revenue -= removedRecord.getAmount();
+            }else {
+                m_expenditure += removedRecord.getAmount();
+            }
         }
 
-        [[nodiscard]] int getIndexById(const int id) const {
+        void setTransactionTimeById(const size_t id,const Time &transactionTime) {
+            m_recordList.setTransactionTimeById(id, transactionTime);
+        }
+
+        void setAmountById(const size_t id, const double amount) {
+            if (amount>0) {
+                m_revenue += amount;
+            }else {
+                m_expenditure -= amount;
+            }
+            if (const auto oldAmount = m_recordList.setAmountById(id, amount); oldAmount>0) {
+                m_revenue -= oldAmount;
+            }else {
+                m_expenditure += oldAmount;
+            }
+        }
+
+        void setPurposeById(const size_t id, const std::string &purpose) {
+            m_recordList.setPurposeById(id, purpose);
+        }
+
+        void setRemarkById(const size_t id, const std::string &remarks) {
+            m_recordList.setRemarkById(id, remarks);
+        }
+
+        [[nodiscard]] size_t getIndexById(const int id) const {
             return m_recordList.getIndexById(id);
         }
 

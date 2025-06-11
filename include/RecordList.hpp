@@ -13,30 +13,42 @@ namespace pfa {
     public:
         RecordList() = default;
 
-        void addRecord(Time transactionTime, double amount, std::string purpose, std::string remarks,Time reviseTime) {
-            m_records.emplace_back(transactionTime, amount, std::move(purpose), std::move(remarks),reviseTime);
+        void addRecord(Time transactionTime, double amount, std::string purpose, std::string remarks, Time reviseTime) {
+            m_records.emplace_back(transactionTime, amount, std::move(purpose), std::move(remarks), reviseTime);
         }
 
-        [[nodiscard]] int getIndexById(const int id) const {
-            int index = id;
-            while (index < m_records[index].getId()) {
+        Time setTransactionTimeById(const size_t id, const Time &transactionTime) {
+            return m_records[getIndexById(id)].setTransactionTime(transactionTime);
+        }
+
+        double setAmountById(const size_t id, const double amount) {
+            return m_records[getIndexById(id)].setAmount(amount);
+        }
+
+        std::string setPurposeById(const size_t id, std::string purpose) {
+            return  m_records[getIndexById(id)].setPurpose(std::move(purpose));
+        }
+
+        std::string setRemarkById(const size_t id, std::string remarks) {
+            return m_records[getIndexById(id)].setRemarks(std::move(remarks));
+        }
+
+        [[nodiscard]] size_t getIndexById(const size_t id) const {
+            size_t index = std::min(id, m_records.size() - 1);
+            while (id > m_records[index].getId()) {
                 ++index;
             }
-            while (index > m_records[index].getId()) {
+            while (id < m_records[index].getId()) {
                 --index;
             }
             return index;
         }
 
-        void removeRecord(const size_t id) {
-            size_t index = id;
-            while (index < m_records[index].getId()) {
-                ++index;
-            }
-            while (index > m_records[index].getId()) {
-                --index;
-            }
+        Record removeRecord(const size_t id) {
+            const size_t index = getIndexById(id);
+            Record removedRecord = m_records[index];
             m_records.erase(m_records.begin() + static_cast<int>(index));
+            return removedRecord;
         }
 
         [[nodiscard]] size_t getRecordsNumber() const { return m_records.size(); }

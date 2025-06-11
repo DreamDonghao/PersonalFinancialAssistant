@@ -39,6 +39,82 @@ int main() {
                 std::cout << list[user.getIndexById(id)].toString() << std::endl;
                 std::println("1.删除 0.取消");
                 std::cin >> input_f;
+                if (input_f != 0) {
+                    user.removeRecord(id);
+                    list = user.getRecords();
+                }
+            }
+        };
+        commands_f[4] = [&]() {
+            system("cls");
+            std::println("进入修改模式,输入ID选择要修改的账单");
+            std::println("0.退出");
+            for (const auto &i: list) {
+                std::cout << i.toStringShowID() << std::endl;
+            }
+            int id;
+            std::cin >> id;
+            if (id != 0) {
+                system("cls");
+                std::println("您正在修改:");
+                std::cout << list[user.getIndexById(id)].toString() << std::endl;
+                std::println("选择您要修改的内容:");
+                std::println("1.交易时间");
+                std::println("2.交易金额(正数收入,负数支出)");
+                std::println("3.交易类型");
+                std::println("4.备注");
+                std::println("0.退出");
+                std::cout << list[user.getIndexById(id)].toString() << std::endl;
+                std::cin >> input_f;
+                int year, month, day, hour, minute, second;
+                double amount = 0;
+                std::string purpose, remarks;
+                switch (input_f) {
+                    case 1:
+                        std::println("请输入交易时间:");
+                        std::print("年:");
+                        std::cin >> year;
+                        std::print("月:");
+                        std::cin >> month;
+                        std::print("日:");
+                        std::cin >> day;
+                        std::print("时:");
+                        std::cin >> hour;
+                        std::print("分:");
+                        std::cin >> minute;
+                        std::print("秒:");
+                        std::cin >> second;
+                        user.setTransactionTimeById(id, {year, month, day, hour, minute, second});
+                        list = user.getRecords();
+                        break;
+                    case 2:
+
+                        std::print("请输入交易金额(正数收入,负数支出):");
+                        std::cin >> amount;
+                        user.setAmountById(id, amount);
+                        list = user.getRecords();
+                        break;
+                    case 3:
+
+                        std::print("请输入交易类型");
+                        std::cin >> purpose;
+                        user.setPurposeById(id, purpose);
+                        list = user.getRecords();
+                        break;
+                    case 4:
+
+                        std::print("请输入备注:");
+                        std::cin >> remarks;
+                        user.setRemarkById(id, remarks);
+                        list = user.getRecords();
+                        break;
+                    default:
+                        break;
+                }
+                std::println("修改成功:");
+                std::cout << list[user.getIndexById(id)].toString() << std::endl;
+                std::println("0.退出");
+                std::cin>>input_f;
             }
         };
         do {
@@ -47,6 +123,7 @@ int main() {
             std::println("1.按交易金额升序");
             std::println("2.按交易金额降序");
             std::println("3.删除模式");
+            std::println("4.修改模式");
             std::println("0.返回主菜单");
             for (size_t i = 0; i < list.size(); ++i) {
                 std::cout << "[" << i + 1 << "]" << list[i].toStringShowID() << std::endl;
