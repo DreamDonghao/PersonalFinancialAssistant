@@ -40,12 +40,29 @@ namespace pfa {
         return remarks;
     }
 
-    [[nodiscard]] int Record::getId() const { return m_id; }
-    [[nodiscard]] const Time &Record::getTransactionTime() const { return m_transactionTime; }
-    [[nodiscard]] double Record::getAmount() const { return m_amount; }
-    [[nodiscard]] const std::string &Record::getPurpose() const { return m_purpose; }
-    [[nodiscard]] const std::string &Record::getRemarks() const { return m_remarks; }
-    [[nodiscard]] const Time &Record::getAddedTime() const { return m_reviseTime; }
+    [[nodiscard]] int Record::getId() const {
+        return m_id;
+    }
+
+    [[nodiscard]] const Time &Record::getTransactionTime() const {
+        return m_transactionTime;
+    }
+
+    [[nodiscard]] double Record::getAmount() const {
+        return m_amount;
+    }
+
+    [[nodiscard]] const std::string &Record::getPurpose() const {
+        return m_purpose;
+    }
+
+    [[nodiscard]] const std::string &Record::getRemarks() const {
+        return m_remarks;
+    }
+
+    [[nodiscard]] const Time &Record::getAddedTime() const {
+        return m_reviseTime;
+    }
 
     [[nodiscard]] std::string Record::toFileDataString() const {
         Time::setSeparators({"", " ", " ", " ", " ", " ", ""});

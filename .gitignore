@@ -1,3 +1,5 @@
 /.idea
 /docs
 Doxyfile
+/markdown
+config.json

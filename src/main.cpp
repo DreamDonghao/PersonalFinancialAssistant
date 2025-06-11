@@ -64,7 +64,6 @@ int main() {
                 std::println("3.交易类型");
                 std::println("4.备注");
                 std::println("0.退出");
-                std::cout << list[user.getIndexById(id)].toString() << std::endl;
                 std::cin >> input_f;
                 int year, month, day, hour, minute, second;
                 double amount = 0;
@@ -114,7 +113,7 @@ int main() {
                 std::println("修改成功:");
                 std::cout << list[user.getIndexById(id)].toString() << std::endl;
                 std::println("0.退出");
-                std::cin>>input_f;
+                std::cin >> input_f;
             }
         };
         do {
@@ -132,6 +131,8 @@ int main() {
             std::cin >> input_f;
             if (input_f == 0) {
                 return;
+            } else if (!commands_f.contains(input_f)) {
+                continue;
             }
             commands_f[input_f]();
         } while (input_f != 0);
@@ -155,9 +156,16 @@ int main() {
         std::println("1.开始输入");
         std::println("0.退出");
         int input_f = 0;
-        std::cin >> input_f;
-        if (input_f == 0) {
-            return;
+        while (std::cin >> input_f) {
+            if (input_f == 1) {
+                break;
+            } else if (input_f == 0) {
+                return;
+            }
+            system("cls");
+            std::println("添加账单,请输入账单数据:");
+            std::println("1.开始输入");
+            std::println("0.退出");
         }
         system("cls");
         int year, month, day, hour, minute, second;
@@ -209,15 +217,18 @@ int main() {
         system("cls");
         std::println("总收入:{:.2f} \n总支出:{:.2f} \n收支差:{:.2f}",
                      user.getRevenue(), user.getExpenditure(), user.getRevenue() - user.getExpenditure());
-        std::println("1> 查看所有账单");
-        std::println("2> 查看收入账单");
-        std::println("3> 查看支出账单");
-        std::println("4> 添加账单");
-        std::println("0> 退出");
+        std::println("1.查看所有账单");
+        std::println("2.查看收入账单");
+        std::println("3.查看支出账单");
+        std::println("4.添加账单");
+        std::println("0.退出");
+        std::println();
         std::println("请输入功能前的序号:");
         if (std::cin >> input) {
             if (input == 0) {
                 break;
+            } else if (!commands.contains(input)) {
+                continue;
             }
             commands[input]();
         } else {

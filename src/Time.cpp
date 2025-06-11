@@ -14,21 +14,55 @@ namespace pfa {
           m_hour(hour), m_minute(minute), m_second(second) {
     }
 
-    void Time::setYear(const int year) { m_year = year; }
-    void Time::setMonth(const int month) { m_month = month; }
-    void Time::setDay(const int day) { m_day = day; }
-    void Time::setHour(const int hour) { m_hour = hour; }
-    void Time::setMinute(const int minute) { m_minute = minute; }
-    void Time::setSecond(const int second) { m_second = second; }
+    void Time::setYear(const int year) {
+        m_year = year;
+    }
 
-    int Time::getYear() const { return m_year; }
-    int Time::getMonth() const { return m_month; }
-    int Time::getDay() const { return m_day; }
-    int Time::getHour() const { return m_hour; }
-    int Time::getMinute() const { return m_minute; }
-    int Time::getSecond() const { return m_second; }
+    void Time::setMonth(const int month) {
+        m_month = month;
+    }
 
-    auto int_to_str = [](const int x) {
+    void Time::setDay(const int day) {
+        m_day = day;
+    }
+
+    void Time::setHour(const int hour) {
+        m_hour = hour;
+    }
+
+    void Time::setMinute(const int minute) {
+        m_minute = minute;
+    }
+
+    void Time::setSecond(const int second) {
+        m_second = second;
+    }
+
+    int Time::getYear() const {
+        return m_year;
+    }
+
+    int Time::getMonth() const {
+        return m_month;
+    }
+
+    int Time::getDay() const {
+        return m_day;
+    }
+
+    int Time::getHour() const {
+        return m_hour;
+    }
+
+    int Time::getMinute() const {
+        return m_minute;
+    }
+
+    int Time::getSecond() const {
+        return m_second;
+    }
+
+    auto int_to_str(const int x) {
         if (x < 10) {
             return "0" + std::to_string(x);
         } else {

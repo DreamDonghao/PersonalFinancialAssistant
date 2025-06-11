@@ -33,7 +33,7 @@ namespace pfa {
          * @param remarks 备注信息
          * @param reviseTime 修改时间
          */
-        Record(const Time &transactionTime, const double amount, std::string purpose, std::string remarks,
+        Record(const Time &transactionTime, double amount, std::string purpose, std::string remarks,
                const Time &reviseTime);
 
         /// @name 修改字段接口（修改后更新修改时间）
